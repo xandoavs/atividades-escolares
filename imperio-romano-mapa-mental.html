@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Mental — Império Romano</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marble: #f7f2e8;
+      --marble-dark: #ebe2d0;
+      --gold: #d4a72c;
+      --gold-light: #f0cd5a;
+      --purple: #5a2f6e;
+      --purple-deep: #2a1636;
+      --alto: #157a5f;
+      --alto-soft: #e3f4ee;
+      --baixo: #b5482f;
+      --baixo-soft: #fbe9e3;
+      --line: #c9b184;
+      --text: #2b2118;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 3rem;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(240, 205, 90, 0.18), transparent 35%),
+        radial-gradient(circle at 85% 30%, rgba(181, 72, 47, 0.18), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(21, 122, 95, 0.18), transparent 40%),
+        linear-gradient(165deg, #2a1636 0%, #1b0f25 55%, #2a1636 100%);
+    }
+
+    .page { max-width: 1150px; margin: 0 auto; }
+
+    /* ---------- Cabeçalho ---------- */
+    header { text-align: center; margin-bottom: 1.5rem; }
+
+    .subtitle {
+      font-size: 0.95rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .intro {
+      max-width: 620px;
+      margin: 0.6rem auto 0;
+      color: rgba(247, 242, 232, 0.85);
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      background: rgba(247, 242, 232, 0.1);
+      border: 1px solid rgba(240, 205, 90, 0.4);
+      color: var(--marble);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar {
+      width: 110px;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+
+    .progress-bar i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.4s ease;
+    }
+
+    /* ---------- Linha do tempo ---------- */
+    .timeline {
+      margin: 1.5rem auto 2.5rem;
+      padding: 1.1rem 1rem 0.9rem;
+      background: rgba(247, 242, 232, 0.07);
+      border: 1px solid rgba(240, 205, 90, 0.25);
+      border-radius: 16px;
+    }
+
+    .timeline h2 {
+      font-family: Cinzel, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .tl-track {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      gap: 0.25rem;
+    }
+
+    .tl-track::before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 4%;
+      right: 4%;
+      height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--alto) 0%, var(--alto) 40%, var(--baixo) 60%, var(--baixo) 100%);
+    }
+
+    .tl-item {
+      position: relative;
+      flex: 1;
+      text-align: center;
+      color: var(--marble);
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .tl-item::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: 3px auto 0.5rem;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 3px solid var(--purple-deep);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-item b {
+      display: block;
+      font-family: Cinzel, serif;
+      color: var(--gold-light);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- Mapa ---------- */
+    .mindmap { display: flex; flex-direction: column; align-items: center; }
+
+    .node {
+      cursor: pointer;
+      border: none;
+      font: inherit;
+      text-align: inherit;
+      color: inherit;
+    }
+
+    .node:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+
+    .node.is-active {
+      box-shadow: 0 0 0 4px var(--gold-light), 0 8px 26px rgba(240, 205, 90, 0.45) !important;
+    }
+
+    .node.is-seen::after {
+      content: '✓';
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      color: var(--purple-deep);
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--purple-deep);
+    }
+
+    .root {
+      position: relative;
+      font-family: Cinzel, serif;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      letter-spacing: 0.08em;
+      color: var(--marble);
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+      border: 4px solid var(--gold);
+      border-radius: 16px;
+      padding: 1.1rem 2.4rem;
+      text-align: center;
+      box-shadow: 0 0 0 2px rgba(240, 205, 90, 0.3), 0 10px 34px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .root:hover { transform: scale(1.03); }
+
+    .root small {
+      display: block;
+      font-family: Nunito, sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-light);
+      margin-bottom: 0.2rem;
+    }
+
+    .trunk {
+      width: 4px;
+      height: 2.2rem;
+      background: linear-gradient(to bottom, var(--gold), var(--line));
+      border-radius: 2px;
+    }
+
+    .fork {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(1rem, 4vw, 3rem);
+      width: 100%;
+      position: relative;
+    }
+
+    .fork::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(52%, 560px);
+      height: 4px;
+      background: var(--line);
+      border-radius: 2px;
+    }
+
+    .branch {
+      flex: 1;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.6rem;
+      position: relative;
+    }
+
+    .branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 4px;
+      height: 1.6rem;
+      background: var(--line);
+    }
+
+    .branch-title {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      font-family: Cinzel, serif;
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      text-align: center;
+      border: 3px solid;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .branch-title:hover { transform: translateY(-3px); }
+    .branch-title .period {
+      display: block;
+      font-family: Nunito, sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 0.15rem;
+      opacity: 0.85;
+    }
+
+    .branch--alto .branch-title { background: var(--alto-soft); border-color: var(--alto); color: #0c4d3a; }
+    .branch--baixo .branch-title { background: var(--baixo-soft); border-color: var(--baixo); color: #7a2a18; }
+
+    .branch-stem { width: 3px; height: 1.4rem; background: var(--line); }
+
+    .leaves {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding: 0 0.5rem;
+    }
+
+    .leaf {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 1rem;
+      background: var(--marble);
+      border-radius: 12px;
+      border-left: 6px solid var(--gold);
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.3;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .leaf .icon {
+      flex: none;
+      width: 2.4rem;
+      height: 2.4rem;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      border-radius: 50%;
+      background: var(--marble-dark);
+    }
+
+    .leaf:hover { background: #fffaf0; transform: translateX(5px); }
+
+    .branch--alto .leaf { border-left-color: var(--alto); }
+    .branch--alto .leaf .icon { background: var(--alto-soft); }
+    .branch--baixo .leaf { border-left-color: var(--baixo); }
+    .branch--baixo .leaf .icon { background: var(--baixo-soft); }
+
+    .leaf--highlight {
+      background: linear-gradient(135deg, #fff6e0, var(--marble));
+      border-left-width: 8px;
+      font-weight: 800;
+    }
+
+    /* ---------- Painel de explicação ---------- */
+    .detail-panel {
+      margin: 2.5rem auto 0;
+      max-width: 700px;
+      background: var(--marble);
+      border: 3px solid var(--gold);
+      border-radius: 18px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.4);
+    }
+
+    .detail-panel.is-empty {
+      background: rgba(247, 242, 232, 0.08);
+      border: 3px dashed rgba(240, 205, 90, 0.5);
+      box-shadow: none;
+    }
+
+    .detail-panel.is-empty .detail-title,
+    .detail-panel.is-empty .detail-body { color: rgba(247, 242, 232, 0.9); }
+    .detail-panel.is-empty .detail-fun { display: none; }
+
+    .detail-panel:not(.is-empty) { animation: detail-in 0.3s ease; }
+
+    @keyframes detail-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--baixo);
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-title {
+      font-family: Cinzel, serif;
+      font-size: 1.45rem;
+      color: var(--purple-deep);
+      margin-bottom: 0.7rem;
+      line-height: 1.25;
+    }
+
+    .detail-body { font-size: 1.15rem; line-height: 1.6; }
+
+    .detail-fun {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      background: #fff3c9;
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .detail-fun b { color: #8a6500; }
+
+    .detail-panel[data-theme="alto"] { border-color: var(--alto); }
+    .detail-panel[data-theme="baixo"] { border-color: var(--baixo); }
+    .detail-panel[data-theme="root"] { border-color: var(--purple); }
+
+    .legend {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+      color: rgba(247, 242, 232, 0.8);
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot--alto { background: var(--alto); }
+    .dot--baixo { background: var(--baixo); }
+
+    @media (max-width: 720px) {
+      .fork { flex-direction: column; align-items: center; }
+      .fork::before, .branch::before { display: none; }
+      .branch { max-width: 100%; width: 100%; padding-top: 1.2rem; }
+      .tl-track { flex-direction: column; gap: 0.9rem; align-items: flex-start; padding-left: 1.5rem; }
+      .tl-track::before { top: 6px; bottom: 6px; left: 10px; right: auto; width: 4px; height: auto; }
+      .tl-item { text-align: left; display: flex; gap: 0.8rem; align-items: center; }
+      .tl-item::before { margin: 0 0 0 -1.5rem; flex: none; }
+      .tl-item b { display: inline; margin-right: 0.4rem; }
+    }
+
+    @media print {
+      body { background: white; }
+      .intro, .subtitle, .legend, .progress { color: #333; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <p class="subtitle">História · Antiguidade</p>
+      <p class="intro">Roma começou como uma pequena cidade e virou um dos maiores impérios do mundo. Clique nos blocos para descobrir como isso aconteceu.</p>
+      <div class="progress" aria-live="polite">
+        <span id="progress-text">Você leu 0 de 14</span>
+        <span class="progress-bar"><i id="progress-fill"></i></span>
+      </div>
+    </header>
+
+    <section class="timeline" aria-label="Linha do tempo do Império Romano">
+      <h2>Linha do tempo</h2>
+      <ol class="tl-track">
+        <li class="tl-item"><b>27 a.C.</b>Augusto vira o primeiro imperador</li>
+        <li class="tl-item"><b>117 d.C.</b>Império com o maior tamanho</li>
+        <li class="tl-item"><b>Século III</b>Começam as crises</li>
+        <li class="tl-item"><b>380</b>Cristianismo é a religião oficial</li>
+        <li class="tl-item"><b>395</b>Império dividido em dois</li>
+        <li class="tl-item"><b>476</b>Fim do Império do Ocidente</li>
+      </ol>
+    </section>
+
+    <div class="mindmap">
+      <button type="button" class="root node" data-topic="imperio-romano" data-theme="root">
+        <small>SPQR</small>
+        IMPÉRIO ROMANO
+      </button>
+      <div class="trunk" aria-hidden="true"></div>
+
+      <div class="fork">
+        <section class="branch branch--alto" aria-label="Alto Império">
+          <button type="button" class="branch-title node" data-topic="alto-imperio" data-theme="alto">
+            🏛️ Alto Império
+            <span class="period">O tempo do brilho</span>
+          </button>
+          <div class="branch-stem" aria-hidden="true"></div>
+          <ul class="leaves">
+            <li><button type="button" class="leaf node" data-topic="pax-romana" data-theme="alto"><span class="icon">🕊️</span>Pax Romana</button></li>
+            <li><button type="button" class="leaf node" data-topic="expansao-territorial" data-theme="alto"><span class="icon">🗺️</span>Expansão territorial</button></li>
+            <li><button type="button" class="leaf node" data-topic="comercio-forte" data-theme="alto"><span class="icon">⚖️</span>Comércio forte</button></li>
+            <li><button type="button" class="leaf node" data-topic="cidades-desenvolvidas" data-theme="alto"><span class="icon">🏟️</span>Cidades desenvolvidas</button></li>
+            <li><button type="button" class="leaf node" data-topic="legados-romanos" data-theme="alto"><span class="icon">📜</span>Legados romanos</button></li>
+          </ul>
+        </section>
+
+        <section class="branch branch--baixo" aria-label="Baixo Império">
+          <button type="button" class="branch-title node" data-topic="baixo-imperio" data-theme="baixo">
+            ⚠️ Baixo Império
+            <span class="period">O tempo das crises</span>
+          </button>
+          <div class="branch-stem" aria-hidden="true"></div>
+          <ul class="leaves">
+            <li><button type="button" class="leaf node" data-topic="crise-escravismo" data-theme="baixo"><span class="icon">⛓️</span>Crise do escravismo</button></li>
+            <li><button type="button" class="leaf node" data-topic="ruralizacao" data-theme="baixo"><span class="icon">🌾</span>Ruralização</button></li>
+            <li><button type="button" class="leaf node" data-topic="invasoes-germanicas" data-theme="baixo"><span class="icon">⚔️</span>Invasões germânicas</button></li>
+            <li><button type="button" class="leaf node" data-topic="cristianismo-oficial" data-theme="baixo"><span class="icon">✝️</span>Cristianismo oficial</button></li>
+            <li><button type="button" class="leaf node" data-topic="divisao-imperio" data-theme="baixo"><span class="icon">✂️</span>Divisão do Império</button></li>
+            <li><button type="button" class="leaf leaf--highlight node" data-topic="queda-roma-476" data-theme="baixo"><span class="icon">🏚️</span>Queda de Roma (476)</button></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <aside class="detail-panel is-empty" id="detail-panel" aria-live="polite">
+      <p class="detail-label" id="detail-label">Resumo</p>
+      <h3 class="detail-title" id="detail-title">Explore o mapa</h3>
+      <p class="detail-body" id="detail-body">Clique em qualquer bloco acima para ler uma explicação curta.</p>
+      <p class="detail-fun" id="detail-fun"></p>
+    </aside>
+
+    <div class="legend">
+      <span><i class="dot dot--alto"></i> Tempo de paz e grandeza</span>
+      <span><i class="dot dot--baixo"></i> Tempo de crises e mudanças</span>
+      <span>✓ = bloco já lido</span>
+    </div>
+  </div>
+
+  <script>
+    const SUMMARIES = {
+      'imperio-romano': {
+        title: 'Império Romano',
+        text: 'Foi um grande Estado que nasceu na cidade de Roma e chegou a dominar boa parte da Europa, do norte da África e do Oriente Médio. Roma criou leis, um exército forte e estradas que ligavam povos muito diferentes. A história do Império costuma ser dividida em duas fases: o Alto Império, de grandeza, e o Baixo Império, de crises.',
+        fun: 'Dizia-se que “todos os caminhos levam a Roma”, porque as estradas romanas se espalhavam por todo o Império.'
+      },
+      'alto-imperio': {
+        title: 'Alto Império',
+        text: 'É a fase em que o Império era forte e organizado. Começou com o imperador Augusto, em 27 a.C., e foi até o século III. Nesse tempo, quase não havia guerras dentro do território, o comércio crescia e as cidades prosperavam. Por isso é chamada de época clássica de Roma.',
+        fun: 'Augusto foi o primeiro imperador de Roma e governou por mais de 40 anos.'
+      },
+      'baixo-imperio': {
+        title: 'Baixo Império',
+        text: 'É a fase em que Roma passou a enfrentar muitos problemas, a partir do século III. Houve brigas pelo poder, ataques nas fronteiras e falta de dinheiro. As pessoas deixaram as cidades e foram viver no campo. No fim, o Império do Ocidente perdeu sua força.',
+        fun: 'Em uns 50 anos do século III, Roma teve mais de 20 imperadores, e quase todos foram tirados do poder à força.'
+      },
+      'pax-romana': {
+        title: 'Pax Romana',
+        text: 'Pax Romana quer dizer “Paz Romana”. Foi um tempo longo, de mais de 200 anos, em que houve pouca guerra dentro do Império. Os soldados protegiam as fronteiras e os governadores mantinham a ordem nas províncias. Com isso, pessoas, produtos e ideias viajavam com mais segurança. Isso não quer dizer que nunca houve conflitos, mas o Império viveu muito mais calmo.',
+        fun: '“Pax” é a palavra latina para “paz”. Você reconhece essa palavra em “pacífico”.'
+      },
+      'expansao-territorial': {
+        title: 'Expansão territorial',
+        text: 'Roma cresceu conquistando outros povos e fazendo alianças. Assim, formou muitas províncias, que eram regiões governadas por Roma. Rios como o Reno e o Danúbio funcionavam como fronteiras. Para cuidar de tanto território, Roma precisou de um exército sempre pronto, de governadores e de impostos.',
+        fun: 'No seu maior tamanho, por volta do ano 117, o Império tinha cerca de 60 milhões de habitantes.'
+      },
+      'comercio-forte': {
+        title: 'Comércio forte',
+        text: 'Com moeda confiável, portos, estradas e mais segurança, as pessoas negociavam entre lugares bem distantes. Circulavam trigo, vinho, azeite, metais e tecidos. Também se vendiam pessoas escravizadas. O comércio ligava as cidades e deixava ricos os comerciantes e o Estado.',
+        fun: 'Navios romanos traziam trigo do Egito para alimentar a cidade de Roma.'
+      },
+      'cidades-desenvolvidas': {
+        title: 'Cidades desenvolvidas',
+        text: 'As cidades romanas tinham praça central (o fórum), banhos públicos (as termas), teatros, arenas e aquedutos, que levavam água para a população. Eram o centro da política, da religião e do comércio de cada região. Muitas cidades seguiam o modelo de Roma, e isso ajudava a espalhar o modo de vida romano.',
+        fun: 'O Coliseu, em Roma, podia receber cerca de 50 mil pessoas para assistir aos espetáculos.'
+      },
+      'legados-romanos': {
+        title: 'Legados romanos',
+        text: 'Legado é aquilo que uma civilização deixa para as gerações seguintes. Dos romanos herdamos o direito (base de muitas leis atuais), o latim (origem do português), as técnicas de construção de estradas, pontes e aquedutos e a ideia de cidadania. Muitas coisas do nosso dia a dia vêm de Roma.',
+        fun: 'O português, o espanhol, o italiano e o francês vêm do latim. Por isso são chamados de línguas latinas.'
+      },
+      'crise-escravismo': {
+        title: 'Crise do escravismo',
+        text: 'A economia romana dependia do trabalho de escravizados nas grandes fazendas. Quando as guerras de conquista diminuíram, chegaram menos escravizados e o trabalho ficou mais caro. Também houve revoltas. Aos poucos, muitos proprietários passaram a usar colonos, que eram camponeses livres, mas presos à terra e obrigados a pagar ao dono do lugar onde viviam.',
+        fun: 'Os colonos foram um passo importante para o surgimento da servidão na Idade Média.'
+      },
+      'ruralizacao': {
+        title: 'Ruralização',
+        text: 'Ruralizar quer dizer “ir para o campo”. Com as cidades menos seguras e o comércio em queda, muitas pessoas ricas e pobres foram viver em grandes propriedades rurais, chamadas vilas. Os donos de terras ficaram poderosos e cada vez mais independentes do imperador. A vida passou a girar em torno do campo, e não mais das cidades.',
+        fun: 'Essas grandes propriedades quase se bastavam sozinhas: produziam alimento, tecidos e ferramentas.'
+      },
+      'invasoes-germanicas': {
+        title: 'Invasões germânicas',
+        text: 'Povos que os romanos chamavam de “bárbaros”, como visigodos, ostrogodos, vândalos e francos, entraram no território do Império. Muitos deles buscavam terras para viver e fugiam de outros povos, como os hunos. Houve guerras e também acordos. Com o tempo, esses povos formaram seus próprios reinos e Roma perdeu o controle do Ocidente.',
+        fun: 'Em 410, os visigodos entraram em Roma. Foi a primeira vez em cerca de 800 anos que a cidade foi invadida.'
+      },
+      'cristianismo-oficial': {
+        title: 'Cristianismo oficial',
+        text: 'No começo, os cristãos eram perseguidos. Em 313, o imperador Constantino deu liberdade para todas as religiões, e os cristãos passaram a ser aceitos. Em 380, o imperador Teodósio tornou o cristianismo a religião oficial do Império. A Igreja ganhou muita força e passou a ter grande importância na vida das pessoas.',
+        fun: 'O Édito de Milão, de 313, é o documento que deu liberdade religiosa aos cristãos.'
+      },
+      'divisao-imperio': {
+        title: 'Divisão do Império',
+        text: 'O Império ficou grande demais para ser governado por uma só pessoa. Por isso, imperadores como Diocleciano dividiram tarefas e regiões. Em 395, o imperador Teodósio morreu e o Império foi dividido em dois: o Ocidente, com capital em Roma, e o Oriente, com capital em Constantinopla. O lado oriental durou mais de mil anos. O ocidental ficou fraco e caiu antes.',
+        fun: 'O Império do Oriente ficou conhecido como Império Bizantino e durou até 1453.'
+      },
+      'queda-roma-476': {
+        title: 'Queda de Roma (476)',
+        text: 'Em 476, o chefe germânico Odoacro tirou do trono Rômulo Augústulo, o último imperador do Ocidente. Roma não foi destruída em um único dia. A queda foi o fim de um processo longo, de muitos anos de enfraquecimento. Os historiadores usam essa data para marcar o fim da Antiguidade e o começo da Idade Média.',
+        fun: 'O nome “Rômulo” lembra o lendário fundador de Roma, e “Augústulo” quer dizer “pequeno Augusto”. Foi um fim com nomes de começo!'
+      }
+    };
+
+    const panel = document.getElementById('detail-panel');
+    const detailTitle = document.getElementById('detail-title');
+    const detailBody = document.getElementById('detail-body');
+    const detailFun = document.getElementById('detail-fun');
+    const detailLabel = document.getElementById('detail-label');
+    const nodes = document.querySelectorAll('.node');
+    const seen = new Set();
+    const total = Object.keys(SUMMARIES).length;
+
+    function updateProgress() {
+      document.getElementById('progress-text').textContent = 'Você leu ' + seen.size + ' de ' + total;
+      document.getElementById('progress-fill').style.width = (seen.size / total * 100) + '%';
+    }
+
+    function showSummary(topic, theme) {
+      const entry = SUMMARIES[topic];
+      if (!entry) return;
+
+      seen.add(topic);
+      nodes.forEach((n) => {
+        n.classList.toggle('is-active', n.dataset.topic === topic);
+        if (seen.has(n.dataset.topic)) n.classList.add('is-seen');
+      });
+
+      panel.classList.remove('is-empty');
+      panel.dataset.theme = theme || 'root';
+      detailLabel.textContent = 'Resumo';
+      detailTitle.textContent = entry.title;
+      detailBody.textContent = entry.text;
+      detailFun.innerHTML = '<b>💡 Você sabia?</b> ';
+      detailFun.appendChild(document.createTextNode(entry.fun));
+
+      updateProgress();
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    nodes.forEach((node) => {
+      node.addEventListener('click', () => showSummary(node.dataset.topic, node.dataset.theme));
+    });
+  </script>
+</body>
+</html>
