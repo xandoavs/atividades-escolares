@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idade Média - Resumo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Isometra&display=swap" rel="stylesheet">
+    <style>
+        :root{
+    --marble: #f7f2e8;
+    --marble-dark: #ebe2d0;
+    --gold: #d4a72c;
+    --gold-light: #f0cd5a;
+    --purple: #5a2f6e;
+    --purple-deep: #2a1636;
+    --alto: #157a5f;
+    --alto-soft: #e3f4ee;
+    --baixo: #b5482f;
+    --baixo-soft: #fbe9e3;
+    --line: #c9b184;
+    --text: #2b2118;
+}
+
+    * { box-sizing:border-box; margin: 0; padding: 0; }
+    body {
+        font-family: "Isomera", serif;
+        font-weight: 200;
+        font-style: normal;
+        min-height: 100vh;
+        background: 
+        radial-gradient(circle at 15% 10%, rgba(9, 94, 1, 0.71),transparent 35%),
+        radial-gradient(circle at 85% 30%, rgba(0, 77, 112, 0.884), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(104, 112, 0, 0.884), transparent 40%);
+	background-color: #5a2f6e
+    }
+
+  .grade-conteudos {
+    width: min(1100px, 92%);
+    margin: 60px auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.cartao-medieval {
+    font-family: "Isomera", serif;
+
+    min-height: 180px;
+    padding: 25px;
+
+    border: 5px solid #c9a227;
+    border-radius: 10px;
+
+    background-color: rgb(201 162 39 / 0.8);
+    box-shadow: #2f8a72 3px 3px 3px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+    </style>
+</head>
+<body>
+   <main class="grade-conteudos">
+
+    <div class="cartao-medieval">
+        <h2>ALTA IDADE MÉDIA</h2>
+        <h4>Clique para saber mais:</h4>
+    </div>
+
+    <div class="cartao-medieval">
+        <h2>BAIXA IDADE MÉDIA</h2>
+        <h4>Clique para saber mais:</h4>
+    </div>
+
+</main>
+    
+</body>
+</html>
