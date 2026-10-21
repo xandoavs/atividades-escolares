@@ -1,83 +1,635 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idade Média - Resumo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Isometra&display=swap" rel="stylesheet">
-    <style>
-        :root{
-    --marble: #f7f2e8;
-    --marble-dark: #ebe2d0;
-    --gold: #d4a72c;
-    --gold-light: #f0cd5a;
-    --purple: #5a2f6e;
-    --purple-deep: #2a1636;
-    --alto: #157a5f;
-    --alto-soft: #e3f4ee;
-    --baixo: #b5482f;
-    --baixo-soft: #fbe9e3;
-    --line: #c9b184;
-    --text: #2b2118;
-}
-
-    * { box-sizing:border-box; margin: 0; padding: 0; }
-    body {
-        font-family: "Isomera", serif;
-        font-weight: 200;
-        font-style: normal;
-        min-height: 100vh;
-        background: 
-        radial-gradient(circle at 15% 10%, rgba(9, 94, 1, 0.71),transparent 35%),
-        radial-gradient(circle at 85% 30%, rgba(0, 77, 112, 0.884), transparent 40%),
-        radial-gradient(circle at 20% 80%, rgba(104, 112, 0, 0.884), transparent 40%);
-	background-color: #5a2f6e
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Mental — Idade Média</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marble: #f7f2e8;
+      --marble-dark: #ebe2d0;
+      --gold: #d4a72c;
+      --gold-light: #f0cd5a;
+      --purple: #5a2f6e;
+      --purple-deep: #2a1636;
+      --alto: #157a5f;
+      --alto-soft: #e3f4ee;
+      --baixo: #b5482f;
+      --baixo-soft: #fbe9e3;
+      --line: #c9b184;
+      --text: #2b2118;
     }
 
-  .grade-conteudos {
-    width: min(1100px, 92%);
-    margin: 60px auto;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px;
-}
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 3rem;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(240, 205, 90, 0.18), transparent 35%),
+        radial-gradient(circle at 85% 30%, rgba(181, 72, 47, 0.18), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(21, 122, 95, 0.18), transparent 40%),
+        linear-gradient(165deg, #2a1636 0%, #1b0f25 55%, #2a1636 100%);
+    }
 
-.cartao-medieval {
-    font-family: "Isomera", serif;
+    .page { max-width: 1150px; margin: 0 auto; }
 
-    min-height: 180px;
-    padding: 25px;
+    /* ---------- Cabeçalho ---------- */
+    header { text-align: center; margin-bottom: 1.5rem; }
 
-    border: 5px solid #c9a227;
-    border-radius: 10px;
+    .subtitle {
+      font-size: 0.95rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
 
-    background-color: rgb(201 162 39 / 0.8);
-    box-shadow: #2f8a72 3px 3px 3px;
+    .intro {
+      max-width: 620px;
+      margin: 0.6rem auto 0;
+      color: rgba(247, 242, 232, 0.85);
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    .progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      background: rgba(247, 242, 232, 0.1);
+      border: 1px solid rgba(240, 205, 90, 0.4);
+      color: var(--marble);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
 
-    text-align: center;
-}
-    </style>
+    .progress-bar {
+      width: 110px;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+
+    .progress-bar i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.4s ease;
+    }
+
+    /* ---------- Linha do tempo ---------- */
+    .timeline {
+      margin: 1.5rem auto 2.5rem;
+      padding: 1.1rem 1rem 0.9rem;
+      background: rgba(247, 242, 232, 0.07);
+      border: 1px solid rgba(240, 205, 90, 0.25);
+      border-radius: 16px;
+    }
+
+    .timeline h2 {
+      font-family: Cinzel, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .tl-track {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      gap: 0.25rem;
+    }
+
+    .tl-track::before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 4%;
+      right: 4%;
+      height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--alto) 0%, var(--alto) 40%, var(--baixo) 60%, var(--baixo) 100%);
+    }
+
+    .tl-item {
+      position: relative;
+      flex: 1;
+      text-align: center;
+      color: var(--marble);
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .tl-item::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: 3px auto 0.5rem;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 3px solid var(--purple-deep);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-item b {
+      display: block;
+      font-family: Cinzel, serif;
+      color: var(--gold-light);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- Mapa ---------- */
+    .mindmap { display: flex; flex-direction: column; align-items: center; }
+
+    .node {
+      cursor: pointer;
+      border: none;
+      font: inherit;
+      text-align: inherit;
+      color: inherit;
+    }
+
+    .node:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+
+    .node.is-active {
+      box-shadow: 0 0 0 4px var(--gold-light), 0 8px 26px rgba(240, 205, 90, 0.45) !important;
+    }
+
+    .node.is-seen::after {
+      content: '✓';
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      color: var(--purple-deep);
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--purple-deep);
+    }
+
+    .root {
+      position: relative;
+      font-family: Cinzel, serif;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      letter-spacing: 0.08em;
+      color: var(--marble);
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-deep) 100%);
+      border: 4px solid var(--gold);
+      border-radius: 16px;
+      padding: 1.1rem 2.4rem;
+      text-align: center;
+      box-shadow: 0 0 0 2px rgba(240, 205, 90, 0.3), 0 10px 34px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .root:hover { transform: scale(1.03); }
+
+    .root small {
+      display: block;
+      font-family: Nunito, sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-light);
+      margin-bottom: 0.2rem;
+    }
+
+    .trunk {
+      width: 4px;
+      height: 2.2rem;
+      background: linear-gradient(to bottom, var(--gold), var(--line));
+      border-radius: 2px;
+    }
+
+    .fork {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(1rem, 4vw, 3rem);
+      width: 100%;
+      position: relative;
+    }
+
+    .fork::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(52%, 560px);
+      height: 4px;
+      background: var(--line);
+      border-radius: 2px;
+    }
+
+    .branch {
+      flex: 1;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.6rem;
+      position: relative;
+    }
+
+    .branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 4px;
+      height: 1.6rem;
+      background: var(--line);
+    }
+
+    .branch-title {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      font-family: Cinzel, serif;
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      text-align: center;
+      border: 3px solid;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .branch-title:hover { transform: translateY(-3px); }
+    .branch-title .period {
+      display: block;
+      font-family: Nunito, sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 0.15rem;
+      opacity: 0.85;
+    }
+
+    .branch--alto .branch-title { background: var(--alto-soft); border-color: var(--alto); color: #0c4d3a; }
+    .branch--baixo .branch-title { background: var(--baixo-soft); border-color: var(--baixo); color: #7a2a18; }
+
+    .branch-stem { width: 3px; height: 1.4rem; background: var(--line); }
+
+    .leaves {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding: 0 0.5rem;
+    }
+
+    .leaf {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 1rem;
+      background: var(--marble);
+      border-radius: 12px;
+      border-left: 6px solid var(--gold);
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.3;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .leaf .icon {
+      flex: none;
+      width: 2.4rem;
+      height: 2.4rem;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      border-radius: 50%;
+      background: var(--marble-dark);
+    }
+
+    .leaf:hover { background: #fffaf0; transform: translateX(5px); }
+
+    .branch--alto .leaf { border-left-color: var(--alto); }
+    .branch--alto .leaf .icon { background: var(--alto-soft); }
+    .branch--baixo .leaf { border-left-color: var(--baixo); }
+    .branch--baixo .leaf .icon { background: var(--baixo-soft); }
+
+    .leaf--highlight {
+      background: linear-gradient(135deg, #fff6e0, var(--marble));
+      border-left-width: 8px;
+      font-weight: 800;
+    }
+
+    /* ---------- Painel de explicação ---------- */
+    .detail-panel {
+      margin: 2.5rem auto 0;
+      max-width: 700px;
+      background: var(--marble);
+      border: 3px solid var(--gold);
+      border-radius: 18px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.4);
+    }
+
+    .detail-panel.is-empty {
+      background: rgba(247, 242, 232, 0.08);
+      border: 3px dashed rgba(240, 205, 90, 0.5);
+      box-shadow: none;
+    }
+
+    .detail-panel.is-empty .detail-title,
+    .detail-panel.is-empty .detail-body { color: rgba(247, 242, 232, 0.9); }
+    .detail-panel.is-empty .detail-fun { display: none; }
+
+    .detail-panel:not(.is-empty) { animation: detail-in 0.3s ease; }
+
+    @keyframes detail-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--baixo);
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-title {
+      font-family: Cinzel, serif;
+      font-size: 1.45rem;
+      color: var(--purple-deep);
+      margin-bottom: 0.7rem;
+      line-height: 1.25;
+    }
+
+    .detail-body { font-size: 1.15rem; line-height: 1.6; }
+
+    .detail-fun {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      background: #fff3c9;
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .detail-fun b { color: #8a6500; }
+
+    .detail-panel[data-theme="alto"] { border-color: var(--alto); }
+    .detail-panel[data-theme="baixo"] { border-color: var(--baixo); }
+    .detail-panel[data-theme="root"] { border-color: var(--purple); }
+
+    .legend {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+      color: rgba(247, 242, 232, 0.8);
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot--alto { background: var(--alto); }
+    .dot--baixo { background: var(--baixo); }
+
+    @media (max-width: 720px) {
+      .fork { flex-direction: column; align-items: center; }
+      .fork::before, .branch::before { display: none; }
+      .branch { max-width: 100%; width: 100%; padding-top: 1.2rem; }
+      .tl-track { flex-direction: column; gap: 0.9rem; align-items: flex-start; padding-left: 1.5rem; }
+      .tl-track::before { top: 6px; bottom: 6px; left: 10px; right: auto; width: 4px; height: auto; }
+      .tl-item { text-align: left; display: flex; gap: 0.8rem; align-items: center; }
+      .tl-item::before { margin: 0 0 0 -1.5rem; flex: none; }
+      .tl-item b { display: inline; margin-right: 0.4rem; }
+    }
+
+    @media print {
+      body { background: white; }
+      .intro, .subtitle, .legend, .progress { color: #333; }
+    }
+  </style>
 </head>
 <body>
-   <main class="grade-conteudos">
+  <div class="page">
 
-    <div class="cartao-medieval">
-        <h2>ALTA IDADE MÉDIA</h2>
-        <h4>Clique para saber mais:</h4>
+    <header>
+      <p class="subtitle">História · Idade Média</p>
+      <p class="intro">A Idade Média durou cerca de mil anos, entre a queda de Roma e a tomada de Constantinopla. Clique nos blocos para descobrir como as pessoas viviam nessa época.</p>
+      <div class="progress" aria-live="polite">
+        <span id="progress-text">Você leu 0 de 14</span>
+        <span class="progress-bar"><i id="progress-fill"></i></span>
+      </div>
+    </header>
+
+    <section class="timeline" aria-label="Linha do tempo da Idade Média">
+      <h2>Linha do tempo</h2>
+      <ol class="tl-track">
+        <li class="tl-item"><b>476</b>Queda de Roma no Ocidente</li>
+        <li class="tl-item"><b>800</b>Carlos Magno é coroado imperador</li>
+        <li class="tl-item"><b>Séculos IX e X</b>O feudalismo se firma</li>
+        <li class="tl-item"><b>1096</b>Começa a primeira Cruzada</li>
+        <li class="tl-item"><b>1347</b>A Peste Negra chega à Europa</li>
+        <li class="tl-item"><b>1453</b>Queda de Constantinopla</li>
+      </ol>
+    </section>
+
+    <div class="mindmap">
+      <button type="button" class="root node" data-topic="idade-media" data-theme="root">
+        <small>MEDIEVO</small>
+        IDADE MÉDIA
+      </button>
+      <div class="trunk" aria-hidden="true"></div>
+
+      <div class="fork">
+        <section class="branch branch--alto" aria-label="Alta Idade Média">
+          <button type="button" class="branch-title node" data-topic="alta-idade-media" data-theme="alto">
+            🏰 Alta Idade Média
+            <span class="period">Séculos V ao X</span>
+          </button>
+          <div class="branch-stem" aria-hidden="true"></div>
+          <ul class="leaves">
+            <li><button type="button" class="leaf node" data-topic="reinos-germanicos" data-theme="alto"><span class="icon">🛡️</span>Reinos germânicos</button></li>
+            <li><button type="button" class="leaf node" data-topic="imperio-carolingio" data-theme="alto"><span class="icon">👑</span>Império Carolíngio</button></li>
+            <li><button type="button" class="leaf node" data-topic="feudalismo" data-theme="alto"><span class="icon">🌄</span>Feudalismo</button></li>
+            <li><button type="button" class="leaf node" data-topic="sociedade-feudal" data-theme="alto"><span class="icon">🌾</span>Sociedade feudal</button></li>
+            <li><button type="button" class="leaf node" data-topic="poder-igreja" data-theme="alto"><span class="icon">⛪</span>Poder da Igreja</button></li>
+          </ul>
+        </section>
+
+        <section class="branch branch--baixo" aria-label="Baixa Idade Média">
+          <button type="button" class="branch-title node" data-topic="baixa-idade-media" data-theme="baixo">
+            🏙️ Baixa Idade Média
+            <span class="period">Séculos XI ao XV</span>
+          </button>
+          <div class="branch-stem" aria-hidden="true"></div>
+          <ul class="leaves">
+            <li><button type="button" class="leaf node" data-topic="cruzadas" data-theme="baixo"><span class="icon">⚔️</span>Cruzadas</button></li>
+            <li><button type="button" class="leaf node" data-topic="renascimento-comercial" data-theme="baixo"><span class="icon">⚖️</span>Renascimento comercial</button></li>
+            <li><button type="button" class="leaf node" data-topic="burgos-burguesia" data-theme="baixo"><span class="icon">🏘️</span>Burgos e burguesia</button></li>
+            <li><button type="button" class="leaf node" data-topic="peste-negra" data-theme="baixo"><span class="icon">🐀</span>Peste Negra</button></li>
+            <li><button type="button" class="leaf node" data-topic="guerra-cem-anos" data-theme="baixo"><span class="icon">🏹</span>Guerra dos Cem Anos</button></li>
+            <li><button type="button" class="leaf leaf--highlight node" data-topic="queda-constantinopla-1453" data-theme="baixo"><span class="icon">🧱</span>Queda de Constantinopla (1453)</button></li>
+          </ul>
+        </section>
+      </div>
     </div>
 
-    <div class="cartao-medieval">
-        <h2>BAIXA IDADE MÉDIA</h2>
-        <h4>Clique para saber mais:</h4>
-    </div>
+    <aside class="detail-panel is-empty" id="detail-panel" aria-live="polite">
+      <p class="detail-label" id="detail-label">Resumo</p>
+      <h3 class="detail-title" id="detail-title">Explore o mapa</h3>
+      <p class="detail-body" id="detail-body">Clique em qualquer bloco acima para ler uma explicação curta.</p>
+      <p class="detail-fun" id="detail-fun"></p>
+    </aside>
 
-</main>
-    
+    <div class="legend">
+      <span><i class="dot dot--alto"></i> Tempo de reinos e feudos</span>
+      <span><i class="dot dot--baixo"></i> Tempo de cidades, comércio e crises</span>
+      <span>✓ = bloco já lido</span>
+    </div>
+  </div>
+
+  <script>
+    const SUMMARIES = {
+      'idade-media': {
+        title: 'Idade Média',
+        text: 'É o período da história europeia que vai da queda do Império Romano do Ocidente, em 476, até a tomada de Constantinopla, em 1453. Foram cerca de mil anos. Costuma ser dividido em duas fases: a Alta Idade Média, dos séculos V ao X, e a Baixa Idade Média, dos séculos XI ao XV.',
+        fun: 'O nome “Idade Média” foi criado depois, por pessoas que viam esse tempo como o “meio” entre a Antiguidade e a Idade Moderna.'
+      },
+      'alta-idade-media': {
+        title: 'Alta Idade Média',
+        text: 'É a primeira fase, do século V ao X. Depois da queda de Roma, a Europa Ocidental se dividiu em vários reinos germânicos. As cidades perderam importância, a vida passou a girar em torno do campo e a Igreja ganhou muita força. No fim dessa fase, o feudalismo já estava bem firme.',
+        fun: 'Nessa época, o latim falado pelo povo foi mudando aos poucos e deu origem a línguas como o português.'
+      },
+      'baixa-idade-media': {
+        title: 'Baixa Idade Média',
+        text: 'É a segunda fase, do século XI ao XV. O comércio voltou a crescer, as cidades renasceram e surgiu um grupo novo, a burguesia. Houve as Cruzadas, mas também crises graves, como a fome, a Peste Negra e longas guerras. Aos poucos, o feudalismo foi enfraquecendo e os reis ganharam poder.',
+        fun: 'Foi nessa fase que surgiram as primeiras universidades, como as de Bolonha e de Paris.'
+      },
+      'reinos-germanicos': {
+        title: 'Reinos germânicos',
+        text: 'Com a queda de Roma, povos germânicos fundaram reinos no antigo território romano: os francos, onde hoje é a França; os visigodos, na Península Ibérica; os ostrogodos, na Itália; e os anglo-saxões, na Inglaterra. Os reis eram chefes guerreiros. Esses povos misturaram seus costumes com a cultura romana e com o cristianismo.',
+        fun: 'O nome “França” vem dos francos, e o nome “Inglaterra” vem dos anglos.'
+      },
+      'imperio-carolingio': {
+        title: 'Império Carolíngio',
+        text: 'Carlos Magno, rei dos francos, conquistou muitas terras e uniu grande parte da Europa Ocidental. No ano 800, o papa o coroou imperador. Ele dividiu o território em condados, governados por condes de sua confiança, e incentivou a criação de escolas. Depois da sua morte, seus netos dividiram o império e o poder dos reis enfraqueceu.',
+        fun: 'Carlos Magno chamou sábios de vários lugares para ensinar na sua corte. Esse movimento é conhecido como Renascimento Carolíngio.'
+      },
+      'feudalismo': {
+        title: 'Feudalismo',
+        text: 'Feudalismo foi o modo de organizar a sociedade medieval, baseado na posse da terra. Um senhor poderoso, o suserano, dava terras (feudos) a outro nobre, o vassalo. Em troca, o vassalo jurava lealdade e ajuda militar. Com o tempo, cada senhor passou a mandar nas suas terras, enquanto o rei tinha pouco poder.',
+        fun: 'A cerimônia em que o vassalo jurava fidelidade ao suserano se chamava “homenagem”.'
+      },
+      'sociedade-feudal': {
+        title: 'Sociedade feudal',
+        text: 'A sociedade era dividida em três grupos, e era muito difícil mudar de grupo: o clero (quem reza), a nobreza (quem luta) e os servos (quem trabalha). Os servos viviam nas terras do senhor e pagavam obrigações, como a corveia (dias de trabalho para o senhor) e a talha (parte da colheita). Em troca, recebiam proteção.',
+        fun: 'Os servos não eram escravos, mas também não podiam sair das terras do senhor sem permissão.'
+      },
+      'poder-igreja': {
+        title: 'Poder da Igreja',
+        text: 'A Igreja Católica era a instituição mais poderosa da Idade Média. Tinha muitas terras, cobrava o dízimo e aconselhava reis e nobres. Os mosteiros guardavam livros, ensinavam a ler e a escrever e cuidavam de doentes. A religião fazia parte do dia a dia, e a fé orientava a vida e a cultura da época.',
+        fun: 'Os monges copiavam livros à mão, e uma única obra podia levar meses para ficar pronta.'
+      },
+      'cruzadas': {
+        title: 'Cruzadas',
+        text: 'Foram expedições militares organizadas pela Igreja e por nobres, a partir de 1096, para conquistar Jerusalém e a Terra Santa, que estavam em mãos de muçulmanos. Houve várias Cruzadas, e nem todas alcançaram o objetivo. Além da fé, havia interesse em terras e comércio. As Cruzadas aumentaram o contato entre a Europa e o Oriente.',
+        fun: 'O nome vem da cruz, o símbolo que os participantes levavam nas roupas.'
+      },
+      'renascimento-comercial': {
+        title: 'Renascimento comercial',
+        text: 'A partir do século XI, as técnicas agrícolas melhoraram, a população cresceu e sobrou mais produto para vender. O comércio voltou a ganhar força, com feiras e rotas por terra e por mar. Cidades italianas, como Veneza e Gênova, ficaram ricas levando produtos do Oriente para a Europa. A moeda passou a circular mais.',
+        fun: 'Nas feiras medievais, como as de Champagne, na França, vendiam-se tecidos, especiarias e muitos outros produtos.'
+      },
+      'burgos-burguesia': {
+        title: 'Burgos e burguesia',
+        text: 'Perto de castelos, mosteiros e cruzamentos de rotas, surgiram os burgos, que foram crescendo e virando cidades. Seus moradores eram comerciantes e artesãos, a burguesia. Eles se organizavam em corporações de ofício e queriam liberdade e regras favoráveis ao comércio. Com o dinheiro que ganhavam, foram ficando cada vez mais poderosos.',
+        fun: 'A palavra “burguês” vem de “burgo”, que significava um lugar fortificado.'
+      },
+      'peste-negra': {
+        title: 'Peste Negra',
+        text: 'Entre 1347 e 1351, uma doença grave, a peste bubônica, se espalhou pela Europa, trazida por navios que vinham do Oriente. Morreu cerca de um terço da população. Com falta de trabalhadores no campo, muitos servos conseguiram melhores condições, e o feudalismo se enfraqueceu ainda mais. A fome e as revoltas camponesas também marcaram o século XIV.',
+        fun: 'A doença era transmitida principalmente por pulgas que viviam em ratos e se espalhou rápido pelos portos e cidades.'
+      },
+      'guerra-cem-anos': {
+        title: 'Guerra dos Cem Anos',
+        text: 'Foi uma série de conflitos entre Inglaterra e França, de 1337 a 1453, por causa de terras e da disputa pelo trono francês. Teve longas pausas, e a França acabou vencendo. A guerra enfraqueceu os nobres e fortaleceu os reis, que passaram a ter exércitos próprios. Joana d’Arc foi uma figura muito importante do lado francês.',
+        fun: 'Apesar do nome, a guerra durou 116 anos.'
+      },
+      'queda-constantinopla-1453': {
+        title: 'Queda de Constantinopla (1453)',
+        text: 'Em 1453, os turcos otomanos conquistaram Constantinopla, capital do Império Bizantino, que era a continuação do Império Romano do Oriente. Essa é a data mais usada para marcar o fim da Idade Média. Segundo muitos historiadores, o domínio otomano deixou as rotas para o Oriente mais difíceis, e os europeus passaram a procurar novos caminhos, o que levou às Grandes Navegações.',
+        fun: 'Alguns historiadores preferem usar 1492, ano da chegada de Colombo à América, como o fim da Idade Média.'
+      }
+    };
+
+    const panel = document.getElementById('detail-panel');
+    const detailTitle = document.getElementById('detail-title');
+    const detailBody = document.getElementById('detail-body');
+    const detailFun = document.getElementById('detail-fun');
+    const detailLabel = document.getElementById('detail-label');
+    const nodes = document.querySelectorAll('.node');
+    const seen = new Set();
+    const total = Object.keys(SUMMARIES).length;
+
+    function updateProgress() {
+      document.getElementById('progress-text').textContent = 'Você leu ' + seen.size + ' de ' + total;
+      document.getElementById('progress-fill').style.width = (seen.size / total * 100) + '%';
+    }
+
+    function showSummary(topic, theme) {
+      const entry = SUMMARIES[topic];
+      if (!entry) return;
+
+      seen.add(topic);
+      nodes.forEach((n) => {
+        n.classList.toggle('is-active', n.dataset.topic === topic);
+        if (seen.has(n.dataset.topic)) n.classList.add('is-seen');
+      });
+
+      panel.classList.remove('is-empty');
+      panel.dataset.theme = theme || 'root';
+      detailLabel.textContent = 'Resumo';
+      detailTitle.textContent = entry.title;
+      detailBody.textContent = entry.text;
+      detailFun.innerHTML = '<b>💡 Você sabia?</b> ';
+      detailFun.appendChild(document.createTextNode(entry.fun));
+
+      updateProgress();
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    nodes.forEach((node) => {
+      node.addEventListener('click', () => showSummary(node.dataset.topic, node.dataset.theme));
+    });
+  </script>
 </body>
 </html>
