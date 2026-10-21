@@ -31,3 +31,11 @@ feature/nova-atividade feature/mapa-mental-roma fix/correcao-links refactor/reor
 
 Documentação
 Sempre atualizar README.md quando novas atividades forem adicionadas.
+
+Atividades
+História (disciplinas/historia/)
+- index.html: índice da coleção histórica
+- ensino-fundamental/historia-antiga/roma-antiga/imperio-romano/imperio-romano-mapa-mental.html: mapa mental do Império Romano
+- ensino-fundamental/historia-medieval/feudalismo-mapa-mental.html: mapa mental do Feudalismo
+
+A página inicial do repositório é o index.html da raiz, que apenas aponta para as atividades de cada disciplina.
